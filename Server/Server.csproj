@@ -31,4 +31,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Admin\" />
+    <Folder Include="Pages\Teacher\" />
+    <Folder Include="Pages\Student\" />
+  </ItemGroup>
 </Project>

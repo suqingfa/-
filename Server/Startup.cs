@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Data;
 using Server.Services;
+using System.Linq;
 
 namespace Server
 {
@@ -28,11 +29,26 @@ namespace Server
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // 添加授权策略
+            services.AddAuthorization(options =>
+            {
+                foreach (var item in Roles.Values)
+                {
+                    options.AddPolicy(item, policy => policy.RequireRole(item));
+                }
+            });
+
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
+
+                    // 设置授权策略
+                    foreach (var item in Roles.Values)
+                    {
+                        options.Conventions.AuthorizeFolder($"/{item}", item);
+                    }
                 });
 
             // Register no-op EmailSender used by account confirmation and password reset during development
@@ -71,6 +87,16 @@ namespace Server
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 context.Database.Migrate();
+
+                foreach (var item in Roles.Values)
+                {
+                    var role = context.Roles.Where(r => r.Name == item).FirstOrDefault();
+                    if (role == null)
+                    {
+                        context.Roles.Add(new IdentityRole { Name = item, NormalizedName = item.ToUpper() });
+                        context.SaveChanges();
+                    }
+                }
             }
         }
     }
