@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "学院管理";
+}
+<h2>
+    @ViewData["Title"]
+    <a asp-page="Add" class="btn btn-default" title="添加学院">添加学院</a>
+</h2>
+<table class="table table-hover table-responsive">
+    <thead>
+    <td>学院编号</td>
+    <td>学院名称</td>
+    <td>编辑</td>
+    </thead>
+    @foreach (var item in Model.Institute)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>
+                <form asp-page="Delete" method="post">
+                    <input hidden name="id" value="@item.Id" />
+                    <input hidden name="name" value="@item.Name" />
+                    <button type="submit" class="btn btn-default">删除</button>
+                    <a href="@Url.Page("Update", new{ Id = item.Id })" class="btn btn-default">修改</a>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
