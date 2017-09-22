@@ -11,6 +11,7 @@ namespace Server.Data
         public string Name { get; set; }
         // 所属学院
         [Required]
+        public string InstituteId { get; set; }
         public Institute Institute { get; set; }
 
         // 学生

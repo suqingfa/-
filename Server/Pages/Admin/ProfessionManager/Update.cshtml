@@ -1,0 +1,30 @@
+﻿@page
+@model UpdateModel
+@{
+    ViewData["Title"] = "修改专业信息";
+}
+<section>
+    <form method="post">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <input asp-for="Input.Id" hidden />
+        <div class="form-group">
+            <label asp-for="Input.InstituteId"></label>
+            <select asp-for="Input.InstituteId" class="form-control">
+                @foreach (var item in Model.Institute)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Input.InstituteId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Name"></label>
+            <input asp-for="Input.Name" class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">修改</button>
+        </div>
+    </form>
+</section>
