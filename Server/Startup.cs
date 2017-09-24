@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Data;
 using Server.Services;
-using System.Linq;
 
 namespace Server
 {
@@ -57,7 +56,7 @@ namespace Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -88,14 +87,11 @@ namespace Server
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 context.Database.Migrate();
 
+                RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
                 foreach (var item in Roles.Values)
                 {
-                    var role = context.Roles.Where(r => r.Name == item).FirstOrDefault();
-                    if (role == null)
-                    {
-                        context.Roles.Add(new IdentityRole { Name = item, NormalizedName = item.ToUpper() });
-                        context.SaveChanges();
-                    }
+                    await roleManager.CreateAsync(new IdentityRole(item));
                 }
             }
         }
