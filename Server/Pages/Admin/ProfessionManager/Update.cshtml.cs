@@ -32,8 +32,9 @@ namespace Server.Pages.Admin.ProfessionManager
                 _context.Professions.Update(Input);
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("Index");
             }
+            OnGet(Input.Id);
             return Page();
         }
     }

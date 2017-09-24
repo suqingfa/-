@@ -46,6 +46,8 @@ namespace Server.Pages.Admin.ProfessionManager
 
                 return RedirectToPage("Index");
             }
+
+            OnGet();
             return Page();
         }
     }
