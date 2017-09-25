@@ -35,7 +35,7 @@ namespace Server.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            //[EmailAddress]
             [Display(Name = "电子邮箱")]
             public string Email { get; set; }
 

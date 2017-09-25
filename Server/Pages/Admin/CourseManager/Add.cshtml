@@ -1,0 +1,47 @@
+﻿@page
+@model AddModel
+@{
+    ViewData["Title"] = "添加选课";
+}
+<section>
+    <form method="post">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <div class="form-group">
+            <label asp-for="Input.SemesterId"></label>
+            <select asp-for="Input.SemesterId" class="form-control">
+                @foreach (var item in Model.Semester)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.ClassId"></label>
+            <select asp-for=" Input.ClassId" cl class="form-control">
+                @foreach (var item in Model.Class)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Input.ClassId" class=" text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.TeacherId"></label>
+            <select asp-for="Input.TeacherId" class="form-control">
+                @foreach (var item in Model.Teacher)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Input.TeacherId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">添加</button>
+        </div>
+    </form>
+</section>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "选课表管理";
+}
+<h2>
+    @ViewData["Title"]
+    <a asp-page="Add" class="btn btn-default" title="添加选课">添加选课</a>
+</h2>
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <td>学期名称</td>
+            <td>课程名称</td>
+            <td>老师名称</td>
+            <td>编辑</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Input)
+    {
+        <tr>
+            <td>@item.Semester.Name</td>
+            <td>@item.Class.Name</td>
+            <td>@item.Teacher.Name</td>
+            <td>
+                <form asp-page-handler="Delete" method="post">
+                    <input hidden name="id" value="@item.Id" />
+                    <button type="submit" class="btn btn-default">删除</button>
+                    <a asp-page="Update" asp-route-id="@item.Id" class="btn btn-default">修改</a>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
