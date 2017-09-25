@@ -27,7 +27,7 @@ namespace Server.Pages.Admin.InstituteManager
             _context.Institutes.Remove(_context.Institutes.FirstOrDefault(x => x.Id == id));
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
     }
 }

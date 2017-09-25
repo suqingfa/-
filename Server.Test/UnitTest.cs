@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Server.Data;
-using Server.Pages.Account;
-using Server.Services;
 using System;
 using Xunit;
 
@@ -26,30 +23,13 @@ namespace Server.Test
         }
 
         [Fact]
-        public void Test()
+        public async void AddTestUser()
         {
-            NotNull(Services.GetService<ApplicationDbContext>());
-        }
+            UserManager<ApplicationUser> userManager = Services.GetService<UserManager<ApplicationUser>>();
 
-        [Fact]
-        public async void TestRegister()
-        {
-            var model = new RegisterModel(
-                Services.GetService<UserManager<ApplicationUser>>(),
-                Services.GetService<SignInManager<ApplicationUser>>(),
-                Services.GetService<ILogger<LoginModel>>(),
-                Services.GetService<IEmailSender>());
-
-            model.Input = new RegisterModel.InputModel
-            {
-                Email = "a@a",
-                Password = "Admin12345.",
-                ConfirmPassword = "Admin12345."
-            };
-
-            model.Challenge();
-
-            var result = await model.OnPostAsync();
+            var user = new ApplicationUser { UserName = "a@a", Email = "a@a" };
+            await userManager.CreateAsync(user, "Admin12345.");
+            await userManager.AddToRoleAsync(user, Roles.ADMIN);
         }
     }
 }
