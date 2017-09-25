@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace Server.Pages.Admin.ProfessionManager
     public class IndexModel : PageModel
     {
         public Profession[] Profession { get; set; }
-        public Institute[] Institute { get; set; }
         private ApplicationDbContext _context;
 
         public IndexModel(ApplicationDbContext context)
@@ -19,8 +19,7 @@ namespace Server.Pages.Admin.ProfessionManager
 
         public void OnGet()
         {
-            Profession = _context.Professions.ToArray();
-            Institute = _context.Institutes.ToArray();
+            Profession = _context.Professions.Include(x => x.Institute).ToArray();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
