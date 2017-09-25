@@ -13,6 +13,7 @@ namespace Server.Data
         public double Credit { get; set; }
         // 所属学院
         [Required]
+        public string InstituteId { get; set; }
         public Institute Institute { get; set; }
 
         // 当前课程所开的课
