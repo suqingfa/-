@@ -57,6 +57,19 @@
                             </ul>
                         </li>
                     }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Roles.STUDENT)).Succeeded)
+                    {
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                学生界面<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" style="width: 100%; text-align: center;">
+                                <li>
+                                    <a asp-page="/Student/StudentCourseManager/Index">选课管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                     <li><a asp-page="/About">关于</a></li>
                     <li><a asp-page="/Contact">联系</a></li>
                 </ul>

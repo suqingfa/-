@@ -38,6 +38,14 @@ namespace Server.Test
             teacher = new Teacher { UserName = "t2", Name = "教师二" };
             await userManager.CreateAsync(teacher, "Admin12345.");
             await userManager.AddToRoleAsync(teacher, Roles.TEACHER);
+
+            var student = new Student { UserName = "s1", Name = "学生一" };
+            await userManager.CreateAsync(student, "Admin12345.");
+            await userManager.AddToRoleAsync(student, Roles.STUDENT);
+
+            student = new Student { UserName = "s2", Name = "学生二" };
+            await userManager.CreateAsync(student, "Admin12345.");
+            await userManager.AddToRoleAsync(student, Roles.STUDENT);
         }
     }
 }

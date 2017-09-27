@@ -34,7 +34,7 @@
   <ItemGroup>
     <Folder Include="Pages\Admin\InstituteManager\" />
     <Folder Include="Pages\Admin\ProfessionManager\" />
+    <Folder Include="Pages\Student\StudentCourseManager\" />
     <Folder Include="Pages\Teacher\" />
-    <Folder Include="Pages\Student\" />
   </ItemGroup>
 </Project>

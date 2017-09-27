@@ -1,0 +1,78 @@
+﻿@page
+@model AddModel
+@{
+    ViewData["Title"] = "添加选课";
+}
+<hr />
+<form method="post">
+    <h4>查询选课</h4>
+    <div class="form-group">
+        <label asp-for="Input.SemesterId"></label>
+        <select asp-for="Input.SemesterId" class="form-control">
+            <option value="" selected>---所有---</option>
+            @foreach (var item in Model.Semester)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.ClassId"></label>
+        <select asp-for="Input.ClassId" class="form-control">
+            <option value="" selected>---所有---</option>
+            @foreach (var item in Model.Class)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.ClassId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.TeacherId"></label>
+        <select asp-for="Input.TeacherId" class="form-control">
+            <option value="" selected>---所有---</option>
+            @foreach (var item in Model.Teacher)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-default">查询</button>
+</form>
+<hr />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success fade in">
+        @TempData["Message"]
+    </div>
+}
+<form method="post">
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <td>学期</td>
+                <td>课程名</td>
+                <td>上课教师</td>
+                <td>学分</td>
+                <td></td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Course)
+            {
+            <tr>
+                <td>@item.Semester.Name</td>
+                <td>@item.Class.Name</td>
+                <td>@item.Teacher.Name</td>
+                <td>@item.Class.Credit</td>
+                <td>
+                    <button type="submit" class="btn btn-default" asp-page-handler="Add" asp-route-id="@item.Id">添加</button>
+                </td>
+            </tr>
+        }
+    </table>
+</form>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

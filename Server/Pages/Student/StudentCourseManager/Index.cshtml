@@ -1,0 +1,68 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "学生选课管理";
+}
+<h2>
+    @ViewData["Title"]
+    <a asp-page="Add" class="btn btn-default" title="选课">选课</a>
+</h2>
+<hr />
+<form method="post">
+    <h4>查询课表</h4>
+    <div class="form-group">
+        <label asp-for="Input.SemesterId"></label>
+        <select asp-for="Input.SemesterId" class="form-control">
+            <option value="" selected>---所有---</option>
+            @foreach (var item in Model.Semester)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.TeacherId"></label>
+        <select asp-for="Input.TeacherId" class="form-control">
+            <option value="" selected>---所有---</option>
+            @foreach (var item in Model.Teacher)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-default">查询</button>
+</form>
+<hr />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success fade in">
+        @TempData["Message"]
+    </div>
+}
+<form method="post">
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <td>课程编号</td>
+                <td>课程名</td>
+                <td>上课教师</td>
+                <td>成绩</td>
+                <td></td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.StudentCourses)
+        {
+            <tr>
+                <td>@item.CourseId</td>
+                <td>@item.Course.Class.Name</td>
+                <td>@item.Course.Teacher.Name</td>
+                <td>@item.Achievement</td>
+                <td>
+                    <button type="submit" class="btn btn-default" asp-page-handler="Delete" asp-route-id="@item.Id">删除</button>
+                </td>
+            </tr>
+        }
+    </table>
+</form>
