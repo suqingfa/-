@@ -29,7 +29,7 @@ namespace Server.Pages.Admin.CourseManager
 
         public Semester[] Semester { get; set; }
         public Class[] Class { get; set; }
-        public Teacher[] Teacher { get; set; }
+        public Data.Teacher[] Teacher { get; set; }
 
         private ApplicationDbContext _context;
 

@@ -1,0 +1,45 @@
+﻿@page
+@model AchievementModel
+@{
+    ViewData["Title"] = "修改学生成绩";
+}
+<section>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success fade in">
+            @TempData["Message"]
+        </div>
+    }
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>成绩</td>
+                <td>修改成绩</td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.StudentCourse)
+            {
+            <tr>
+                <td>@item.StudentId</td>
+                <td>@item.Student.Name</td>
+                <td>@item.Achievement</td>
+                <td>
+                    <form method="post" role="form">
+                        <input asp-for="Input.StudentCourseId" value="@item.Id" hidden />
+                        <div class="input-group">
+                            <input asp-for="Input.Achievement" class="form-control">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default">修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</section>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

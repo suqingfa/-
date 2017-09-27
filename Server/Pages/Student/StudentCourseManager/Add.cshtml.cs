@@ -28,7 +28,7 @@ namespace Server.Pages.Student.StudentCourseManager
 
         public Semester[] Semester { get; set; }
         public Class[] Class { get; set; }
-        public Teacher[] Teacher { get; set; }
+        public Data.Teacher[] Teacher { get; set; }
 
         public Course[] Course { get; set; }
 
