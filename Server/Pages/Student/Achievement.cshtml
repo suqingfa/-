@@ -1,7 +1,7 @@
 ﻿@page
-@model IndexModel
+@model AchievementModel
 @{
-    ViewData["Title"] = "学生选课管理";
+    ViewData["Title"] = "成绩查询";
 }
 <h2>
     @ViewData["Title"]
@@ -21,26 +21,9 @@
         </select>
         <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.TeacherId"></label>
-        <select asp-for="Input.TeacherId" class="form-control">
-            <option value="" selected>---所有---</option>
-            @foreach (var item in Model.Teacher)
-            {
-                <option value="@item.Id">@item.Name</option>
-            }
-        </select>
-        <span asp-validation-for="Input.SemesterId" class="text-danger"></span>
-    </div>
     <button type="submit" class="btn btn-default">查询</button>
 </form>
 <hr />
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success fade in">
-        @TempData["Message"]
-    </div>
-}
 <form method="post">
     <table class="table table-hover table-responsive">
         <thead>
@@ -49,7 +32,7 @@
                 <td>学期</td>
                 <td>课程名</td>
                 <td>上课教师</td>
-                <td></td>
+                <td>成绩</td>
             </tr>
         </thead>
         @foreach (var item in Model.StudentCourses)
@@ -59,9 +42,7 @@
                 <td>@item.Course.Semester.Name</td>
                 <td>@item.Course.Class.Name</td>
                 <td>@item.Course.Teacher.Name</td>
-                <td>
-                    <button type="submit" class="btn btn-default" asp-page-handler="Delete" asp-route-id="@item.Id">删除</button>
-                </td>
+                <td>@item.Achievement</td>
             </tr>
         }
     </table>
